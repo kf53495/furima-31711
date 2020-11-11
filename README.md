@@ -56,12 +56,12 @@
 ## destinations テーブル
 | Column        | Type       | Options     |
 | :-----------: | :--------: | :---------: |
-| postal_code   | integer    | mull: false |
-| prefecture    | string     | mull: false |
-| municipality  | string     | mull: false |
-| address       | string     | mull: false |
-| building_name | string     | mull: false |
-| phone_number  | string     | mull: false |
+| postal_code   | integer    | null: false |
+| prefecture    | string     | null: false |
+| municipality  | string     | null: false |
+| address       | string     | null: false |
+| building_name | string     | null: false |
+| phone_number  | string     | null: false |
 | order         | references | -           |
  
 ### Association
