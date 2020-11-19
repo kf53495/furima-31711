@@ -6,7 +6,7 @@ class Item < ApplicationRecord
     validates :item_name
     validates :item_explanation
 
-    validates :price, inclusion: { in: 300..9999999 }
+    validates :price, inclusion: { in: 300..9999999 }, numericality: { only_integer: true }
     
     with_options numericality: { other_than: 1 } do
       validates :category_id
