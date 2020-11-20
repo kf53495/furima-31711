@@ -39,27 +39,32 @@ RSpec.describe Item, type: :model do
       expect(@item.errors.full_messages).to include('Status must be other than 1')
     end
     it '配送料の負担についての情報が必須であること' do
-      @item.delivery_fee_payer_id = nil
+      @item.delivery_fee_payer_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("Delivery fee payer can't be blank")
+      expect(@item.errors.full_messages).to include("Delivery fee payer must be other than 1")
     end
     it '発送元の地域についての情報が必須であること' do
-      @item.prefecture_id = nil
+      @item.prefecture_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("Prefecture can't be blank")
+      expect(@item.errors.full_messages).to include("Prefecture must be other than 1")
     end
     it '発送までの日数についての情報が必須であること' do
-      @item.delivery_time_id = nil
+      @item.delivery_time_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("Delivery time can't be blank")
+      expect(@item.errors.full_messages).to include("Delivery time must be other than 1")
     end
     it '価格についての情報が必須であること' do
       @item.price = nil
       @item.valid?
       expect(@item.errors.full_messages).to include("Price can't be blank")
     end
-    it '価格の範囲が、¥300~¥9,999,999の間であること' do
-      @item.price = 100
+    it '価格の範囲が、¥300より低いと登録できないこと' do
+      @item.price = 299
+      @item.valid?
+      expect(@item.errors.full_messages).to include('Price is not included in the list')
+    end
+    it '価格の範囲が、¥9999999より高いと登録できないこと' do
+      @item.price = 10000000
       @item.valid?
       expect(@item.errors.full_messages).to include('Price is not included in the list')
     end
