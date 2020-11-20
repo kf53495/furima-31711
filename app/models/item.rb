@@ -3,6 +3,7 @@ class Item < ApplicationRecord
   belongs_to :user
 
   with_options presence: true do
+    validates :image
     validates :item_name
     validates :item_explanation
 
@@ -11,6 +12,7 @@ class Item < ApplicationRecord
     with_options numericality: { other_than: 1 } do
       validates :category_id
       validates :status_id
+      validates :prefecture_id
       validates :delivery_fee_payer_id
       validates :delivery_time_id
     end
