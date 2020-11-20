@@ -7,8 +7,8 @@ class Item < ApplicationRecord
     validates :item_name
     validates :item_explanation
 
-    validates :price, inclusion: { in: 300..9999999 }, numericality: { only_integer: true }
-    
+    validates :price, inclusion: { in: 300..9_999_999 }, numericality: { only_integer: true }
+
     with_options numericality: { other_than: 1 } do
       validates :category_id
       validates :status_id
@@ -17,7 +17,6 @@ class Item < ApplicationRecord
       validates :delivery_time_id
     end
   end
-
 
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category
