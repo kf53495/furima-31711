@@ -28,6 +28,11 @@ class ItemsController < ApplicationController
       redirect_to action: :index
     end
   end
+
+  def update
+  end
+
+
   private
 
   def item_params
