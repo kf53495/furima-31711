@@ -1,20 +1,17 @@
 class OrdersController < ApplicationController
   def index
-    #@item = Item.find_by(id: params[:format])
     @item = Item.find(params[:item_id])
-    #@order = Order.new
   end
 
   def create
-    #@item = Item.find_by(id: params[:format])
     @item = Item.find(params[:item_id])
     @order = Order.create(order_params)
     @destination = Destination.new(destination_params(@order))
-
-    if @order.save
+    if @order.valid? && @destination.valid?
+      @destination.save
       redirect_to root_path
     else
-      render 'items/new'
+      render :index
     end
   end
 
@@ -26,7 +23,7 @@ class OrdersController < ApplicationController
   end
 
   def destination_params(order)
-    params.permit(:postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :order_id).merge(order_id: order.id)
+    params.permit(:postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :order_id).merge(order_id: @order.id)
   end
 
 end
