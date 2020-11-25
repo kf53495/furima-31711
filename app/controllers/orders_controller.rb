@@ -7,10 +7,9 @@ class OrdersController < ApplicationController
 
   def create
     #@item = Item.find_by(id: params[:format])
-    #@item = Item.find(params[:id])
+    @item = Item.find(params[:item_id])
     @order = Order.create(order_params)
-    binding.pry
-    destination = Destination.new(destination_params(@order))
+    @destination = Destination.new(destination_params(@order))
 
     if @order.save
       redirect_to root_path
@@ -23,11 +22,11 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.permit(:user_id, :item_id) #.merge(user_id: current_user.id, item_id: @item.id)
+    params.permit(:user_id, :item_id).merge(user_id: current_user.id, item_id: @item.id)
   end
 
   def destination_params(order)
-    params.require(:destination).permit(:postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :order_id).merge(order_id: order.id)
+    params.permit(:postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :order_id).merge(order_id: order.id)
   end
 
 end
