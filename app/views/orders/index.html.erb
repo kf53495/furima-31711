@@ -31,7 +31,7 @@
     </div>
     <%# /支払額の表示 %>
 
-    <%= form_with(model: @order_destination, url: item_orders_path, id: 'charge-form', class: 'transaction-form-wrap',local: true) do |f| %>
+    <%= form_with(model: @order_destination, id: 'charge-form', class: 'transaction-form-wrap',local: true) do |f| %>
     <%# カード情報の入力 %>
     <div class='credit-card-form'>
       <h1 class='info-input-haedline'>
@@ -61,7 +61,7 @@
           <%= f.text_area 'hoge', class:"input-expiration-date", id:"card-exp-year", placeholder:"例)23" %>
           <p>年</p>
         </div>
-      </div>
+      </div>      
       <div class="form-group">
         <div class='form-text-wrap'>
           <label class="form-text">セキュリティコード</label>
