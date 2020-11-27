@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+    binding.pry
     @item = Item.find(params[:item_id])
     @order_destination = OrderDestination.new(order_destination_params)
     if @order_destination.valid? #@order.valid? && @destination.valid?
@@ -18,7 +19,7 @@ class OrdersController < ApplicationController
   private
 
   def order_destination_params
-    params.permit(:user_id, :item_id, :postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :order_id).merge(user_id: current_user.id, item_id: @item.id)
+    params.permit(:user_id, :item_id, :postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :order_id).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
   end
 
 end
