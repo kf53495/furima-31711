@@ -4,10 +4,10 @@ class OrdersController < ApplicationController
   end
 
   def create
-    binding.pry
     @item = Item.find(params[:item_id])
     @order_destination = OrderDestination.new(order_destination_params)
-    if @order_destination.valid? #@order.valid? && @destination.valid?
+    if @order_destination.valid? 
+      pay_item
       @order_destination.save
       redirect_to root_path
     else
@@ -20,6 +20,15 @@ class OrdersController < ApplicationController
 
   def order_destination_params
     params.permit(:user_id, :item_id, :postal_code, :prefecture_id, :municipality, :address, :building_name, :phone_number, :order_id).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
+  end
+
+  def pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: @item.price, 
+      card: order_destination_params[:token],    
+      currency: 'jpy'      
+    )
   end
 
 end
