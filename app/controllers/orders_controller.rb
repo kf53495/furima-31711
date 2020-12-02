@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
+  before_action :find_item
+
   def index
-    @item = Item.find(params[:item_id])
     if !user_signed_in?
       redirect_to new_user_session_path
     elsif current_user.id == @item.user_id
@@ -10,7 +11,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_destination = OrderDestination.new(order_destination_params)
     if @order_destination.valid?
       pay_item
@@ -35,4 +35,12 @@ class OrdersController < ApplicationController
       currency: 'jpy'
     )
   end
+
+
+  private
+
+  def find_item
+    @item = Item.find(params[:item_id])
+  end
+  
 end
