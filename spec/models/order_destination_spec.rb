@@ -1,14 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe OrderDestination, type: :model do
-  describe '#create' do
-    before do
-      @order_destination = FactoryBot.build(:order_destination)
-    end
+  
+  before do
+    @order_destination = FactoryBot.build(:order_destination)
+  end
 
+  describe '正しく登録できる場合' do
     it '配送先の情報が全て正しく入力されていたら購入できること' do
       expect(@order_destination).to be_valid
     end
+    it '建物名が抜けていても登録できること' do
+      @order_destination.building_name = nil
+      expect(@order_destination).to be_valid
+    end
+  end
+
+  describe '正しく登録できない場合' do
     it '郵便番号が空だと購入できないこと' do
       @order_destination.postal_code = nil
       @order_destination.valid?
@@ -39,8 +47,8 @@ RSpec.describe OrderDestination, type: :model do
       @order_destination.valid?
       expect(@order_destination.errors.full_messages).to include('Phone number is invalid')
     end
-    it '電話番号は10桁もしくは11桁であること' do
-      @order_destination.phone_number = '12345'
+    it '電話番号は11桁以内であること' do
+      @order_destination.phone_number = '123456789012'
       @order_destination.valid?
       expect(@order_destination.errors.full_messages).to include('Phone number is invalid')
     end
