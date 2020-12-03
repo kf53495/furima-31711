@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   before_action :find_item
 
   def index
-    if Order.exists?(item_id: params[:item_id])
+    if @item.order
       redirect_to root_path
     elsif !user_signed_in?
       redirect_to new_user_session_path
