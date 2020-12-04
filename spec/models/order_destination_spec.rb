@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe OrderDestination, type: :model do
-  
   before do
     @order_destination = FactoryBot.build(:order_destination)
   end
