@@ -2,11 +2,9 @@ class OrdersController < ApplicationController
   before_action :find_item
 
   def index
-    if @item.order
-      redirect_to root_path
-    elsif !user_signed_in?
+    if !user_signed_in?
       redirect_to new_user_session_path
-    elsif current_user.id == @item.user_id
+    elsif @item.order || (current_user.id == @item.user_id)
       redirect_to root_path
     end
     @order_destination = OrderDestination.new
